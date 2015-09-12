@@ -26,15 +26,27 @@ class Game extends GameBase {
   }
 
   void createEntities() {
-    addEntity([
-      new Position(0, 0),
+    var player = addEntity([
+      new Position(0, -150),
       new Size(32.0, 32.0),
       new Renderable(),
       new LookAtMouse(),
-      new Orientation(0.0, 0.0),
+      new Orientation(-PI/2, -PI/2),
       new Acceleration(0.0, 0.0),
       new Velocity(0.0, 0.0)
     ]);
+    addEntity([
+      new Position(0, 150),
+      new Size(64.0, 64.0),
+      new Renderable(),
+      new LookAtPlayer(),
+      new Orientation(PI/2, PI/2),
+      new Acceleration(0.0, 0.0),
+      new Velocity(0.0, 0.0)
+    ]);
+
+    var tm = world.getManager(TagManager) as TagManager;
+    tm.register(player, tagPlayer);
   }
 
   Map<int, List<EntitySystem>> getSystems() {
@@ -42,6 +54,7 @@ class Game extends GameBase {
       GameBase.rendering: [
         new KeyboardInputSystem(),
         new MouseInputOrientationSystem(hudCanvas),
+        new PlayerLookingSystem(),
         new OrientationSystem(),
         new WebGlCanvasCleaningSystem(ctx),
         new RectangleRenderingSystem(ctx),
@@ -54,5 +67,9 @@ class Game extends GameBase {
         // add at least one
       ]
     };
+  }
+
+  onInit() {
+    world.addManager(new TagManager());
   }
 }

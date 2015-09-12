@@ -73,3 +73,21 @@ class OrientationSystem extends EntityProcessingSystem {
     }
   }
 }
+
+class PlayerLookingSystem extends EntityProcessingSystem {
+  Mapper<Orientation> om;
+  Mapper<Position> pm;
+  TagManager tm;
+
+  PlayerLookingSystem() : super(Aspect.getAspectForAllOf([Position, Orientation, LookAtPlayer]));
+
+  @override
+  void processEntity(Entity entity) {
+    var player = tm.getEntity(tagPlayer);
+    var o = om[entity];
+    var p = pm[entity];
+    var pp = pm[player];
+
+    o.targetAngle = atan2(p.value.y - pp.value.y, p.value.x - pp.value.x);
+  }
+}

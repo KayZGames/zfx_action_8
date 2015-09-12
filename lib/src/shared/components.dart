@@ -29,3 +29,4 @@ class Orientation extends Component {
 
 class Renderable extends Component {}
 class LookAtMouse extends Component {}
+class LookAtPlayer extends Component {}
