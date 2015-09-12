@@ -46,7 +46,7 @@ class RectangleRenderingSystem extends WebGlRenderingSystem {
   void render(int length) {
     bufferElements(attribs, items, indices);
 
-    gl.drawElements(TRIANGLES, indices.length, UNSIGNED_SHORT, 0);
+    gl.drawElements(TRIANGLES, length * 6, UNSIGNED_SHORT, 0);
   }
 
   @override

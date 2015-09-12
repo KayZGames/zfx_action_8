@@ -28,16 +28,19 @@ class Game extends GameBase {
   void createEntities() {
     var player = addEntity([
       new Position(0, -150),
-      new Size(32.0, 32.0),
+      new Size(32.0, 16.0),
       new Renderable(),
       new LookAtMouse(),
       new Orientation(-PI/2, -PI/2),
       new Acceleration(0.0, 0.0),
-      new Velocity(0.0, 0.0)
+      new Velocity(0.0, 0.0),
+      new Gun(500.0, 5, 10.0, 1.0, 2.0),
+      new Weapon(1.0),
+      new MouseClickTriggersWeapon()
     ]);
     addEntity([
       new Position(0, 150),
-      new Size(64.0, 64.0),
+      new Size(64.0, 128.0),
       new Renderable(),
       new LookAtPlayer(),
       new Orientation(PI/2, PI/2),
@@ -54,6 +57,7 @@ class Game extends GameBase {
       GameBase.rendering: [
         new KeyboardInputSystem(),
         new MouseInputOrientationSystem(hudCanvas),
+        new MouseClickSystem(hudCanvas),
         new PlayerLookingSystem(),
         new OrientationSystem(),
         new WebGlCanvasCleaningSystem(ctx),
@@ -64,7 +68,8 @@ class Game extends GameBase {
       GameBase.physics: [
         new AccelerationSystem(),
         new MovementSystem(),
-        // add at least one
+        new GunTriggerSystem(),
+        new ExpirationSystem(),
       ]
     };
   }

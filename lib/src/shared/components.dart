@@ -27,6 +27,27 @@ class Orientation extends Component {
   Orientation(this.angle, this.targetAngle);
 }
 
+class Weapon extends Component {
+  double cooldown;
+  double timer;
+  Weapon(this.cooldown) : this.timer = 0.0;
+}
+
+class Gun extends Component {
+  double bulletSpeed;
+  int bullets;
+  double spread;
+  double bulletWidth, bulletHeight;
+  Gun(this.bulletSpeed, this.bullets, this.spread, this.bulletWidth, this.bulletHeight);
+}
+
 class Renderable extends Component {}
 class LookAtMouse extends Component {}
 class LookAtPlayer extends Component {}
+class MouseClickTriggersWeapon extends Component {}
+class TriggeredWeapon extends Component {}
+
+class ExpirationTimer extends Component {
+  double value;
+  ExpirationTimer(this.value);
+}
